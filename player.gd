@@ -6,6 +6,9 @@ extends CharacterBody3D
 @export var max_speed = 5
 @export var LOOKAROUND_SPEED = 0.002
 
+#func _ready() -> void:
+	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 var rot_x = 0
 var rot_y = 0
 var roll = 0
@@ -75,9 +78,14 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event):
-	if event is InputEventMouseMotion and event.button_mask & 1:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED: # and event.button_mask & 1:
 		rot_x -= event.relative.x * LOOKAROUND_SPEED
 		rot_y -= event.relative.y * LOOKAROUND_SPEED
+	if event.is_action_pressed("ui_cancel"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if event.is_action_pressed("click"):
+		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	
 	

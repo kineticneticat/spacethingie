@@ -9,4 +9,4 @@ func _physics_process(delta: float) -> void:
 	#print(player.velocity.length())
 	var vel = player.velocity.length()
 	value = vel
-	$SpeedLabel.text = str(vel)
+	$SpeedLabel.text = str(round(vel*100)/100)
