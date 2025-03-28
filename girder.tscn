@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://blgk0p3x3a2gk"]
+
+[node name="Girder" type="RigidBody3D"]

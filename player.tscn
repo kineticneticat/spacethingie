@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://djoai3t5pjblv"]
+
+[ext_resource type="Script" uid="uid://c27yq5f7uf4y0" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4flbx"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_4flbx")
+restitution = 0.01
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_4flbx")

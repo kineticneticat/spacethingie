@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://bu8aonya31mkl"]
+
+[ext_resource type="PackedScene" uid="uid://djoai3t5pjblv" path="res://player.tscn" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://bddyu6mg6jtnq" path="res://gui.tscn" id="2_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://bgn2tvrc3kp7v" path="res://marker.tscn" id="3_tlwt5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gv5m4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_f3sb7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
+size = Vector3(33.7341, 1.94629, 33.9504)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tlwt5"]
+size = Vector3(10, 0.5, 10)
+
+[node name="World" type="Node3D"]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.56068)
+mass = 2.0
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_gv5m4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("BoxMesh_f3sb7")
+
+[node name="TestMarker" parent="RigidBody3D" instance=ExtResource("3_tlwt5")]
+Name = "Cube1"
+
+[node name="Player" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.7552)
+restitution = 0.05
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0135846)
+
+[node name="TestFloor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestFloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.108032, -1.07788, 0.053833)
+shape = SubResource("BoxShape3D_fj7yv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TestFloor"]
+transform = Transform3D(3.401, 0, 0, 0, 1, 0, 0, 0, 3.401, 0, -0.348097, 0)
+mesh = SubResource("BoxMesh_tlwt5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.664469, 0.321104, 0.674814, 0.174266, -0.811512, 0.557745, 0.726714, 0.488201, 0.483267, 6.10573, 3.85242, 3.92511)
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.716338, 0.697753, 0, -0.697753, 0.716338, 1.48739, -0.143613, -1.52367)
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
+shape = SubResource("BoxShape3D_gv5m4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2"]
+mesh = SubResource("BoxMesh_f3sb7")
+skeleton = NodePath("../../RigidBody3D2")
+
+[node name="TestMarker2" parent="RigidBody3D2" instance=ExtResource("3_tlwt5")]
+Name = "Cube2"
+
+[node name="UI" parent="." instance=ExtResource("2_fj7yv")]
+
+[editable path="UI"]
