@@ -1,0 +1,54 @@
+[gd_scene load_steps=12 format=3 uid="uid://dmkfh1rc4me7f"]
+
+[ext_resource type="PackedScene" uid="uid://cd3lv1brld6lc" path="res://moving_thing.tscn" id="1_vkxrh"]
+[ext_resource type="Texture2D" uid="uid://bgjbo0ltbn2d5" path="res://Sky_tex.png" id="2_mln7s"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3rhl1"]
+panorama = ExtResource("2_mln7s")
+
+[sub_resource type="Sky" id="Sky_2khd6"]
+sky_material = SubResource("PanoramaSkyMaterial_3rhl1")
+
+[sub_resource type="Environment" id="Environment_2khd6"]
+background_mode = 2
+sky = SubResource("Sky_2khd6")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_hf13w"]
+
+[sub_resource type="Compositor" id="Compositor_sst51"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rhl1"]
+albedo_color = Color(0.415686, 0.392157, 0.376471, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_2khd6"]
+material = SubResource("StandardMaterial3D_3rhl1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mln7s"]
+shading_mode = 0
+albedo_color = Color(1, 1, 0.101961, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_3rhl1"]
+material = SubResource("StandardMaterial3D_mln7s")
+radius = 25.0
+height = 50.0
+
+[node name="SystemMap" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2khd6")
+camera_attributes = SubResource("CameraAttributesPractical_hf13w")
+compositor = SubResource("Compositor_sst51")
+
+[node name="Stella" parent="." instance=ExtResource("1_vkxrh")]
+
+[node name="Malort" parent="Stella" instance=ExtResource("1_vkxrh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -95)
+
+[node name="Malort" type="MeshInstance3D" parent="Stella/Malort"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 31)
+mesh = SubResource("SphereMesh_2khd6")
+
+[node name="Stella" type="MeshInstance3D" parent="Stella"]
+layers = 9
+mesh = SubResource("SphereMesh_3rhl1")
+skeleton = NodePath("")
