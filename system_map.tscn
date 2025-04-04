@@ -1,8 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://dmkfh1rc4me7f"]
+[gd_scene load_steps=12 format=3 uid="uid://dmkfh1rc4me7f"]
 
 [ext_resource type="PackedScene" uid="uid://cd3lv1brld6lc" path="res://moving_thing.tscn" id="1_vkxrh"]
-[ext_resource type="Script" uid="uid://dcvto5xj5wsrb" path="res://map_camera.gd" id="2_3rhl1"]
-[ext_resource type="PackedScene" uid="uid://bgn2tvrc3kp7v" path="res://marker.tscn" id="3_2khd6"]
+[ext_resource type="Texture2D" uid="uid://bgjbo0ltbn2d5" path="res://Sky_tex.png" id="2_mln7s"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3rhl1"]
+panorama = ExtResource("2_mln7s")
+
+[sub_resource type="Sky" id="Sky_2khd6"]
+sky_material = SubResource("PanoramaSkyMaterial_3rhl1")
+
+[sub_resource type="Environment" id="Environment_2khd6"]
+background_mode = 2
+sky = SubResource("Sky_2khd6")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_hf13w"]
+
+[sub_resource type="Compositor" id="Compositor_sst51"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rhl1"]
 albedo_color = Color(0.415686, 0.392157, 0.376471, 1)
@@ -21,31 +34,21 @@ height = 50.0
 
 [node name="SystemMap" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2khd6")
+camera_attributes = SubResource("CameraAttributesPractical_hf13w")
+compositor = SubResource("Compositor_sst51")
+
 [node name="Stella" parent="." instance=ExtResource("1_vkxrh")]
 
 [node name="Malort" parent="Stella" instance=ExtResource("1_vkxrh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -95)
-script = null
 
 [node name="Malort" type="MeshInstance3D" parent="Stella/Malort"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 31)
 mesh = SubResource("SphereMesh_2khd6")
 
-[node name="MalortMarker" parent="Stella/Malort" node_paths=PackedStringArray("Target") instance=ExtResource("3_2khd6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 31)
-Name = "Malort"
-Colour = Color(0.533907, 0.397539, 0.260399, 1)
-Target = NodePath("../../../Camera3D")
-
 [node name="Stella" type="MeshInstance3D" parent="Stella"]
 layers = 9
 mesh = SubResource("SphereMesh_3rhl1")
 skeleton = NodePath("")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -42.4194)
-script = ExtResource("2_3rhl1")
-
-[node name="CameraWatchPos" parent="." instance=ExtResource("3_2khd6")]
-Name = "WatchPos"
-Colour = Color(0.827778, 0.298034, 0.657335, 1)
