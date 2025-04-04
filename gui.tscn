@@ -1,9 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://bddyu6mg6jtnq"]
+[gd_scene load_steps=11 format=3 uid="uid://bddyu6mg6jtnq"]
 
 [ext_resource type="Texture2D" uid="uid://duwyolpxkatj1" path="res://bartest.png" id="1_6lon5"]
 [ext_resource type="Script" uid="uid://c0ypryumeec86" path="res://speedometer.gd" id="1_80edf"]
 [ext_resource type="Texture2D" uid="uid://0vaam81rk1nt" path="res://underbartest.png" id="1_q8o8l"]
 [ext_resource type="Texture2D" uid="uid://dsqp4i7cv35ci" path="res://crosshair.png" id="4_cor1f"]
+[ext_resource type="Texture2D" uid="uid://bgjbo0ltbn2d5" path="res://Sky_tex.png" id="5_jf511"]
+[ext_resource type="PackedScene" uid="uid://dmkfh1rc4me7f" path="res://system_map.tscn" id="5_u77ya"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0wv8u"]
+panorama = ExtResource("5_jf511")
+
+[sub_resource type="Sky" id="Sky_67jta"]
+sky_material = SubResource("PanoramaSkyMaterial_0wv8u")
+
+[sub_resource type="Environment" id="Environment_p8208"]
+background_mode = 2
+sky = SubResource("Sky_67jta")
+
+[sub_resource type="World3D" id="World3D_axmix"]
+environment = SubResource("Environment_p8208")
 [ext_resource type="PackedScene" uid="uid://bpn27h74nopul" path="res://nyph_lang_text.tscn" id="5_u77ya"]
 
 [node name="Control" type="Control"]
@@ -13,6 +28,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Markers" type="Control" parent="."]
+z_index = 1
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Speedometer" type="TextureProgressBar" parent="."]
 layout_mode = 1
@@ -42,11 +63,6 @@ anchor_bottom = 1.0
 offset_top = -32.0
 offset_right = 64.0
 
-[node name="Markers" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="Crosshair" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 1
@@ -63,6 +79,20 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_cor1f")
 stretch_mode = 4
+
+[node name="Map" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+stretch = true
+
+[node name="MapViewport" type="SubViewport" parent="Map"]
+world_3d = SubResource("World3D_axmix")
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="SystemMap" parent="Map/MapViewport" instance=ExtResource("5_u77ya")]
 
 [node name="NyphLangText" parent="." instance=ExtResource("5_u77ya")]
 layout_mode = 1

@@ -6,9 +6,6 @@ extends CharacterBody3D
 @export var max_speed = 5
 @export var LOOKAROUND_SPEED = 0.002
 
-#func _ready() -> void:
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
 var rot_x = 0
 var rot_y = 0
 var roll = 0
@@ -16,41 +13,43 @@ var roll_vel = 0
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector3.ZERO
-
-	if Input.is_action_pressed("strafe_right"):
-		direction.x += 1
-	if Input.is_action_pressed("strafe_left"):
-		direction.x -= 1
-	if Input.is_action_pressed("move_backwards"):
-		direction.z += 1
-	if Input.is_action_pressed("move_forwards"):
-		direction.z -= 1
-	if Input.is_action_pressed("move_up"):
-		direction.y += 1
-	if Input.is_action_pressed("move_down"):
-		direction.y -= 1
-	if Input.is_action_pressed("slow_down"):
-		if velocity.length_squared() > 0.01*0.01:
-			direction -= global_transform.basis.inverse() * velocity.limit_length(1)
-		
-
-	if direction != Vector3.ZERO:
-		direction = direction.normalized()
+	
+	if not Rails.is_in_map:
+		if Input.is_action_pressed("strafe_right"):
+			direction.x += 1
+		if Input.is_action_pressed("strafe_left"):
+			direction.x -= 1
+		if Input.is_action_pressed("move_backwards"):
+			direction.z += 1
+		if Input.is_action_pressed("move_forwards"):
+			direction.z -= 1
+		if Input.is_action_pressed("move_up"):
+			direction.y += 1
+		if Input.is_action_pressed("move_down"):
+			direction.y -= 1
+		if Input.is_action_pressed("slow_down"):
+			if velocity.length_squared() > 0.01*0.01:
+				direction -= global_transform.basis.inverse() * velocity.limit_length(1)
+			
+		if direction != Vector3.ZERO:
+			direction = direction.normalized()
+			
+		if Input.is_action_pressed("roll_clockwise"):
+			roll -= roll_speed
+		if Input.is_action_pressed("roll_anticlockwise"):
+			roll += roll_speed
+		transform.basis = Basis()
+		var camera: Camera3D = get_node("Camera3D")
+		rotate_object_local(camera.transform.basis.z, roll)
+		rotate_object_local(Vector3.UP, rot_x)
+		rotate_object_local(Vector3.RIGHT, rot_y)
 		
 	
 	direction = global_transform.basis * direction
 	velocity = velocity + (direction * delta)
 	velocity = velocity.limit_length(max_speed)
 	
-	if Input.is_action_pressed("roll_clockwise"):
-		roll -= roll_speed
-	if Input.is_action_pressed("roll_anticlockwise"):
-		roll += roll_speed
-	transform.basis = Basis()
-	var camera: Camera3D = get_node("Camera3D")
-	rotate_object_local(camera.transform.basis.z, roll)
-	rotate_object_local(Vector3.UP, rot_x)
-	rotate_object_local(Vector3.RIGHT, rot_y)
+
 	
 	
 	var collision = move_and_collide(velocity*delta)
@@ -78,14 +77,12 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED: # and event.button_mask & 1:
-		rot_x -= event.relative.x * LOOKAROUND_SPEED
-		rot_y -= event.relative.y * LOOKAROUND_SPEED
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if event.is_action_pressed("click"):
-		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if not Rails.is_in_map:
+		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED: # and event.button_mask & 1:
+			rot_x -= event.relative.x * LOOKAROUND_SPEED
+			rot_y -= event.relative.y * LOOKAROUND_SPEED
+	#else:
+		
 
 	
 	
