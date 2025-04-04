@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpn27h74nopul"]
+
+[ext_resource type="Script" uid="uid://8lryu1ab4sav" path="res://nyph_lang_text.gd" id="1_ff7ce"]
+
+[node name="NyphLangText" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ff7ce")
+key = "self/space/copy receiver/sender are friend"

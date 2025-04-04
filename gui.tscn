@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bddyu6mg6jtnq"]
+[gd_scene load_steps=6 format=3 uid="uid://bddyu6mg6jtnq"]
 
 [ext_resource type="Texture2D" uid="uid://duwyolpxkatj1" path="res://bartest.png" id="1_6lon5"]
 [ext_resource type="Script" uid="uid://c0ypryumeec86" path="res://speedometer.gd" id="1_80edf"]
 [ext_resource type="Texture2D" uid="uid://0vaam81rk1nt" path="res://underbartest.png" id="1_q8o8l"]
 [ext_resource type="Texture2D" uid="uid://dsqp4i7cv35ci" path="res://crosshair.png" id="4_cor1f"]
+[ext_resource type="PackedScene" uid="uid://bpn27h74nopul" path="res://nyph_lang_text.tscn" id="5_u77ya"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -62,3 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_cor1f")
 stretch_mode = 4
+
+[node name="NyphLangText" parent="." instance=ExtResource("5_u77ya")]
+layout_mode = 1
+key = "self/space receiver/sender are friend"

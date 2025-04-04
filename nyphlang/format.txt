@@ -1,0 +1,9 @@
+{
+    labels -> {label -> 21 bit flag},
+    patterns -> {
+        21 bit flag -> {
+            top -> 5 bit flag
+            bottom -> 5 bit flag
+        }
+    }
+}
