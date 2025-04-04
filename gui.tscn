@@ -64,6 +64,22 @@ grow_vertical = 2
 texture = ExtResource("4_cor1f")
 stretch_mode = 4
 
-[node name="NyphLangText" parent="." instance=ExtResource("5_u77ya")]
+[node name="frens" parent="." instance=ExtResource("5_u77ya")]
 layout_mode = 1
-key = "self/space receiver/sender are friend"
+offset_left = 272.0
+offset_top = 176.0
+offset_right = -216.0
+offset_bottom = -88.0
+key = "self/sender receiver/sender are friend [statement]"
+pixel_size = 10
+colour = Color(1, 1, 1, 1)
+
+[node name="NyphLangText2" parent="." instance=ExtResource("5_u77ya")]
+layout_mode = 1
+offset_left = 536.0
+offset_top = 408.0
+offset_right = -352.0
+offset_bottom = -72.0
+key = "speaker emotion joy in self/place [unused]"
+pixel_size = 10
+colour = Color(1, 1, 1, 1)

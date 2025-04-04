@@ -13,7 +13,7 @@ func _ready() -> void:
 	(UIPart.get_node("Cross") as TextureRect).modulate = Color(0.5,1,1,1)
 	MarkersNode.add_child(UIPart)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not get_viewport().get_camera_3d().is_position_behind(position):
 		UIPart.visible = true
 		UIPart.position = get_viewport().get_camera_3d().unproject_position(global_position)
