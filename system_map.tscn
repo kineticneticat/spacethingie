@@ -1,21 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dmkfh1rc4me7f"]
+[gd_scene load_steps=7 format=3 uid="uid://dmkfh1rc4me7f"]
 
 [ext_resource type="PackedScene" uid="uid://cd3lv1brld6lc" path="res://moving_thing.tscn" id="1_vkxrh"]
-[ext_resource type="Texture2D" uid="uid://bgjbo0ltbn2d5" path="res://Sky_tex.png" id="2_mln7s"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3rhl1"]
-panorama = ExtResource("2_mln7s")
-
-[sub_resource type="Sky" id="Sky_2khd6"]
-sky_material = SubResource("PanoramaSkyMaterial_3rhl1")
-
-[sub_resource type="Environment" id="Environment_2khd6"]
-background_mode = 2
-sky = SubResource("Sky_2khd6")
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_hf13w"]
-
-[sub_resource type="Compositor" id="Compositor_sst51"]
+[ext_resource type="Script" uid="uid://mn3ccpyy5oye" path="res://map_camera.gd" id="2_mln7s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rhl1"]
 albedo_color = Color(0.415686, 0.392157, 0.376471, 1)
@@ -34,11 +20,6 @@ height = 50.0
 
 [node name="SystemMap" type="Node3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_2khd6")
-camera_attributes = SubResource("CameraAttributesPractical_hf13w")
-compositor = SubResource("Compositor_sst51")
-
 [node name="Stella" parent="." instance=ExtResource("1_vkxrh")]
 
 [node name="Malort" parent="Stella" instance=ExtResource("1_vkxrh")]
@@ -52,3 +33,6 @@ mesh = SubResource("SphereMesh_2khd6")
 layers = 9
 mesh = SubResource("SphereMesh_3rhl1")
 skeleton = NodePath("")
+
+[node name="MapCamera" type="Camera3D" parent="."]
+script = ExtResource("2_mln7s")

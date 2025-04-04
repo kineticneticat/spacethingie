@@ -1,8 +1,6 @@
 @tool
 extends Control
 
-signal dirty
-
 @export var key: String:
 	set(value):
 		key = value
@@ -37,7 +35,11 @@ class Glyph:
 	static func glyph_offset(lower: Glyph, upper: Glyph) -> Array:
 		var t: int = lower.top
 		var b: int = upper.bottom
-		var tests = [0, -2, -1, 1, 2]
+
+		if t == b && b == 0b11111:
+			return [true, 0]
+
+		var tests = [-2, -1, 1, 2, 0]
 		for x in tests:
 			var a = b&t >> x if x>0 else b&t << abs(x)
 			if a & a>>1 & a>>2 != 0:
@@ -101,7 +103,6 @@ class Compound:
 
 	func draw(dynim: Image, tlcorner: Array, colour: Color, pixel_size: int) -> void:
 		var offset = compound_offset()
-		var width = offset.left + offset.right + 5
 		var height = 4*offset.merge + 8*offset.join + 5
 		var left = tlcorner[0] + offset.left
 		var top = tlcorner[1] + height - 5
@@ -270,28 +271,37 @@ func parse(text: String) -> Strand:
 	)
 	return Strand.new(parts, ending)
 
-func create_texture(text: String) -> ImageTexture:
+func create_texture(text: String):
 	var strand = parse(text)
 	var whole_size = strand.strand_size()
 	var dynim = Image.create_empty(whole_size[0]*pixel_size, whole_size[1]*pixel_size, false, Image.FORMAT_RGBA8)
-	dynim.fill(Color(1,0,0,1))
 	strand.draw(dynim, [0, 0], colour, pixel_size)
 
-	return ImageTexture.create_from_image(dynim)
+	print(Glyph.glyph_offset(strand.compound(0).glyph(0), strand.compound(0).glyph(1)))
+	var top = strand.compound(0).glyph(0).top
+	var bottom = strand.compound(0).glyph(1).bottom >>2
+	print(String.num_int64((top & bottom) & (top & bottom)>>1 & (top & bottom)>>2, 2))
+
+	return [ImageTexture.create_from_image(dynim), whole_size]
 
 
 func _ready() -> void:
-	var imtex = create_texture(key)
+	var a = create_texture(key)
+	var imtex = a[0]
 	imtex.resource_name = key
 	var texrect = TextureRect.new()
 	texrect.texture = imtex
 	add_child(texrect)
-
+	size.x = a[1][0]*pixel_size
+	size.y = a[1][1]*pixel_size
 	
 
 
 func on_dirty() -> void:
-	var imtex = create_texture(key)
+	var a = create_texture(key)
+	var imtex = a[0]
 	imtex.resource_name = key
 	var texrect = get_children()[0]
 	texrect.texture = imtex
+	size.x = a[1][0]*pixel_size
+	size.y = a[1][1]*pixel_size

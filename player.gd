@@ -39,8 +39,9 @@ func _physics_process(delta: float) -> void:
 		
 	
 	direction = global_transform.basis * direction
-	velocity = velocity + (direction * delta)
-	velocity = velocity.limit_length(max_speed)
+	if not Map.is_in_map:
+		velocity = velocity + (direction * delta)
+		velocity = velocity.limit_length(max_speed)
 	
 	if Input.is_action_pressed("roll_clockwise"):
 		roll -= roll_speed

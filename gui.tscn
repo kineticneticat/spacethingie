@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c0ypryumeec86" path="res://speedometer.gd" id="1_80edf"]
 [ext_resource type="Texture2D" uid="uid://0vaam81rk1nt" path="res://underbartest.png" id="1_q8o8l"]
 [ext_resource type="Texture2D" uid="uid://dsqp4i7cv35ci" path="res://crosshair.png" id="4_cor1f"]
-[ext_resource type="PackedScene" uid="uid://bpn27h74nopul" path="res://nyph_lang_text.tscn" id="5_u77ya"]
+[ext_resource type="PackedScene" uid="uid://dmkfh1rc4me7f" path="res://system_map.tscn" id="5_jf511"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -64,22 +64,18 @@ grow_vertical = 2
 texture = ExtResource("4_cor1f")
 stretch_mode = 4
 
-[node name="frens" parent="." instance=ExtResource("5_u77ya")]
+[node name="Map" type="SubViewportContainer" parent="."]
 layout_mode = 1
-offset_left = 272.0
-offset_top = 176.0
-offset_right = -216.0
-offset_bottom = -88.0
-key = "self/sender receiver/sender are friend [statement]"
-pixel_size = 10
-colour = Color(1, 1, 1, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
 
-[node name="NyphLangText2" parent="." instance=ExtResource("5_u77ya")]
-layout_mode = 1
-offset_left = 536.0
-offset_top = 408.0
-offset_right = -352.0
-offset_bottom = -72.0
-key = "speaker emotion joy in self/place [unused]"
-pixel_size = 10
-colour = Color(1, 1, 1, 1)
+[node name="MapViewport" type="SubViewport" parent="Map"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="SystemMap" parent="Map/MapViewport" instance=ExtResource("5_jf511")]
+
+[editable path="Map/MapViewport/SystemMap"]
