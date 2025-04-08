@@ -80,16 +80,12 @@ skeleton = NodePath("../../RigidBody3D2")
 [node name="TestMarker2" parent="RigidBody3D2" instance=ExtResource("3_tlwt5")]
 Name = "Cube2"
 
-[node name="UI" parent="." instance=ExtResource("2_fj7yv")]
-
-[node name="Map" parent="UI" index="3"]
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pkg7o")
 camera_attributes = SubResource("CameraAttributesPractical_gbfbk")
 compositor = SubResource("Compositor_ioo17")
+
+[node name="UI" parent="." instance=ExtResource("2_fj7yv")]
 
 [editable path="UI"]
 [editable path="UI/Map/MapViewport/SystemMap"]

@@ -1,10 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://bddyu6mg6jtnq"]
+[gd_scene load_steps=11 format=3 uid="uid://bddyu6mg6jtnq"]
 
 [ext_resource type="Texture2D" uid="uid://duwyolpxkatj1" path="res://bartest.png" id="1_6lon5"]
 [ext_resource type="Script" uid="uid://c0ypryumeec86" path="res://speedometer.gd" id="1_80edf"]
 [ext_resource type="Texture2D" uid="uid://0vaam81rk1nt" path="res://underbartest.png" id="1_q8o8l"]
 [ext_resource type="Texture2D" uid="uid://dsqp4i7cv35ci" path="res://crosshair.png" id="4_cor1f"]
+[ext_resource type="Texture2D" uid="uid://bgjbo0ltbn2d5" path="res://Sky_tex.png" id="5_0wv8u"]
 [ext_resource type="PackedScene" uid="uid://dmkfh1rc4me7f" path="res://system_map.tscn" id="5_jf511"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_67jta"]
+panorama = ExtResource("5_0wv8u")
+
+[sub_resource type="Sky" id="Sky_p8208"]
+sky_material = SubResource("PanoramaSkyMaterial_67jta")
+
+[sub_resource type="Environment" id="Environment_axmix"]
+background_mode = 2
+sky = SubResource("Sky_p8208")
+
+[sub_resource type="World3D" id="World3D_7u6ry"]
+environment = SubResource("Environment_axmix")
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -69,13 +83,29 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 stretch = true
 
 [node name="MapViewport" type="SubViewport" parent="Map"]
+own_world_3d = true
+world_3d = SubResource("World3D_7u6ry")
 handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="SystemMap" parent="Map/MapViewport" instance=ExtResource("5_jf511")]
+
+[node name="SubViewport" type="SubViewport" parent="Map/MapViewport/SystemMap"]
+disable_3d = true
+handle_input_locally = false
+
+[node name="Control" type="Control" parent="Map/MapViewport/SystemMap/SubViewport"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Camera2D" type="Camera2D" parent="Map/MapViewport/SystemMap/SubViewport"]
 
 [editable path="Map/MapViewport/SystemMap"]

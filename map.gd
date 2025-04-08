@@ -5,6 +5,9 @@ extends Node
 	
 var is_in_map = false
 
+func _ready() -> void:
+	$/root/World/UI/Map.hide()
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("map"):
 		is_in_map = not is_in_map

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cd3lv1brld6lc"]
-
-[ext_resource type="Script" uid="uid://cq72im8hu7j5t" path="res://moving_thing.gd" id="1_4dquj"]
-
-[node name="MovingThing" type="Node3D"]
-script = ExtResource("1_4dquj")
